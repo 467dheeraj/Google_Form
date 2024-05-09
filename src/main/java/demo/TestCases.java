@@ -1,5 +1,6 @@
 package demo;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -49,11 +50,17 @@ public class TestCases {
     @FindBy(xpath = "//div[@class='OA0qNb ncFHed QXL7Te']/div[3]")
     WebElement selectGenderElement;
 
+    @FindBy(xpath = "(//input[@class='whsOnd zHQkBf'])[2]")
+    WebElement dateElement;
+
     @FindBy(xpath = "(//div[@class='Xb9hP']/input[@class='whsOnd zHQkBf'])[3]")
     WebElement hourElement;
 
     @FindBy(xpath = "(//div[@class='Xb9hP']/input[@class='whsOnd zHQkBf'])[4]")
     WebElement secondElement;
+
+    @FindBy(className = "vHW8K")
+    WebElement thankyouElement;
 
 
     public  void testCase01() throws InterruptedException{
@@ -76,14 +83,24 @@ public class TestCases {
         dropdownElement.click();
         Thread.sleep(2000);
         selectGenderElement.click();
-        DateFormat dm= new SimpleDateFormat("HH");
+
+        Calendar c= Calendar.getInstance();
+        c.add(Calendar.DAY_OF_YEAR,-7);
+        Date previousDate=c.getTime();
+        DateFormat dm= new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate= dm.format(previousDate);
+        //System.out.print(formattedDate);
+        dateElement.sendKeys(formattedDate);
+
+
+        DateFormat dm1= new SimpleDateFormat("HH");
         Date d= new Date();
-        String time1= dm.format(d);
+        String time1= dm1.format(d);
         hourElement.sendKeys(time1);
         
-        DateFormat dm1= new SimpleDateFormat("mm");
+        DateFormat dm2= new SimpleDateFormat("mm");
         Date d1= new Date();
-        String time2= dm1.format(d1);
+        String time2= dm2.format(d1);
         secondElement.sendKeys(time2);
         //Thread.sleep(3000);
         driver.navigate().to("https://www.amazon.in/");
@@ -93,6 +110,9 @@ public class TestCases {
         Thread.sleep(3000);
 
         driver.findElement(By.xpath("//span[text()='Submit']")).click();
+        Thread.sleep(2000);
+        String submitText=thankyouElement.getText();
+        System.out.println(submitText);
 
 
         
