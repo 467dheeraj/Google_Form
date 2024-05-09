@@ -113,12 +113,6 @@ public class TestCases {
         Thread.sleep(2000);
         String submitText=thankyouElement.getText();
         System.out.println(submitText);
-
-
-        
-
-
-
         System.out.println("end Test case: testCase01");
     }
 
